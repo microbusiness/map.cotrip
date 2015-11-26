@@ -39,6 +39,10 @@ $points['VVO']=new Point(8,'VVO',43.398953,132.148017);
 $points['BKK']=new Point(9,'BKK',13.681108,100.747283);
 $points['PAR']=new Point(10,'PAR',48.856389,2.352222);
 $points['PRG']=new Point(11,'PRG',50.100833,14.26);
+$points['NRT']=new Point(12,'NRT',35.764722,140.386389);
+$points['KEF']=new Point(13,'KEF',63.985,-22.605556);
+$points['JNB']=new Point(14,'JNB',-26.139166,28.246,5558);
+$points['RAK']=new Point(15,'RAK',31.606886,-8.0363);
 ?>
 
 <div id="map"></div>
