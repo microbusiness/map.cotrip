@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Задача коммивояжера</title>
+    <title>Поиск кратчайших аэромаршрутов</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <style>
@@ -27,22 +27,46 @@ spl_autoload_register(function ($class) {
 $list=new RouteItemList();
 $handler=new HeuristicCostHandler();
 
-$points=array();
-$points['MOW']=new Point(1,'MOW',55.7557,37.6176);
-$points['LED']=new Point(2,'LED',59.800292,30.262503);
-$points['AER']=new Point(3,'AER',43.449928,39.956589);
-$points['ROV']=new Point(4,'ROV',47.258208,39.818089);
-$points['OVB']=new Point(5,'OVB',55.012622,82.650656);
-$points['DXB']=new Point(6,'DXB',25.252778,55.364444);
-$points['TSE']=new Point(7,'TSE',51.022222,71.466944);
-$points['VVO']=new Point(8,'VVO',43.398953,132.148017);
-$points['BKK']=new Point(9,'BKK',13.681108,100.747283);
-$points['PAR']=new Point(10,'PAR',48.856389,2.352222);
-$points['PRG']=new Point(11,'PRG',50.100833,14.26);
-$points['NRT']=new Point(12,'NRT',35.764722,140.386389);
-$points['KEF']=new Point(13,'KEF',63.985,-22.605556);
-$points['JNB']=new Point(14,'JNB',-26.139166,28.246,5558);
-$points['RAK']=new Point(15,'RAK',31.606886,-8.0363);
+if (!file_exists('realdata.dat'))
+{
+    $geo=new Geo();
+    $city=$geo->getCities();
+
+    if (!file_exists('airport.dat'))
+    {
+        $data=file_get_contents('https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat');
+        file_put_contents('airport.dat',$data);
+    }
+
+    $dataAirport=file('airport.dat');
+    $points=array();
+    $i=1;
+    foreach ($dataAirport as $airport)
+    {
+        $airport=str_replace('"','',$airport);
+        $ai=explode(',',$airport);
+
+        $newPoint=new Point($ai[0],$ai[4],(float)$ai[6],(float)$ai[7],$ai[1].' '.$ai[2].' '.$ai[3]);
+
+        if ($geo->getCityExist($newPoint,30)!==false)
+        {
+            if ($ai[4]!='')
+            {
+                $points[$ai[4]]=$newPoint;
+            }
+        }
+
+    }
+
+    $pointsSerial=serialize($points);
+    file_put_contents('realdata.dat',$pointsSerial);
+}
+else
+{
+    $pointsSerial=file_get_contents('realdata.dat');
+    $points=unserialize($pointsSerial);
+}
+
 ?>
 
 <div id="map"></div>

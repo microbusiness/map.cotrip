@@ -18,13 +18,18 @@ class Point
      * @var float
      */
     private $lon;
+    /**
+     * @var string
+     */
+    private $fullname;
 
-    public function __construct($id,$name,$lat,$lon)
+    public function __construct($id,$name,$lat,$lon,$fullname)
     {
         $this->id=$id;
         $this->name=$name;
         $this->lat=$lat;
         $this->lon=$lon;
+        $this->fullname=$fullname;
     }
 
     /**
@@ -91,4 +96,19 @@ class Point
         $this->name = $name;
     }
 
+    /**
+     * @return string
+     */
+    public function getFullname()
+    {
+        return $this->fullname;
+    }
+
+    /**
+     * @param string $fullname
+     */
+    public function setFullname($fullname)
+    {
+        $this->fullname = $fullname;
+    }
 }

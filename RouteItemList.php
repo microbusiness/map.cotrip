@@ -31,7 +31,7 @@ class RouteItemList
     {
         $cost=$this->getDistance(array($point1,$point2));
 
-        if ($cost<5000)
+        if ($cost<4000)
         {
             $routeItem=new CalcRouteItem();
             $routeItem->setId($point1->getId().'-'.$point2->getId());

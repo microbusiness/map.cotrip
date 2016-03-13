@@ -36,3 +36,6 @@
 # Composer PHAR
 /composer.phar
 .idea
+/realdata.dat
+/airport.dat
+/cities15000.txt
